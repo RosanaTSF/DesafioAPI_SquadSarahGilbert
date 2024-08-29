@@ -1,0 +1,19 @@
+{% extends "layouts.html" %}
+
+{% block content %}
+    <div class="container">
+        <h2 style="margin-top: 5%; margin-bottom: 5%;color: white;">Todos os Episódios</h2>
+        <div class="row">
+            {% for episodio in episodio %}
+            <div class="col-sm-3 col-6">
+                <div class="card" style="border: 2px solid hwb(0 4% 96%);background-color: rgb(225, 231, 224); padding: 20px; margin-bottom: 20px;">
+                    <h2 class="h6">{{ episodio.name }}</h2>
+                    <p ><strong>Data:</strong> {{ episodio.air_date }}</p>
+                    <p><strong>Link do Episódio:</strong></p>
+                    <a href="{{ episodio.url }}" class="btn btn-primary" style="border: 2px solid hwb(0 4% 96%); background-color: hwb(309 2% 1%);color:black; margin-top: 10px;"> {{ episodio.episode }}</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
