@@ -1,0 +1,23 @@
+{% extends "layouts.html" %}
+
+{% block content %}
+<div class="row">
+
+<div>
+    <h3 class="h5">{{location.name}}</h3>
+    <h3 class="h6">{{location.type}}</h3>
+    <h3 class="h6">{{location.dimension}}</h3>
+    <h3 class="h6">Residents</h3>
+    <div class="row">
+        {% for url in location.residents %}
+        <div class="col-sm-3 col-6">
+            <p>
+                <spam>Personagem {{loop.index}}</spam>
+                <a href="{{url}}" class="btn btn-primary"> Ver perfil</a>
+            </p>
+        </div>
+    {% endfor %}
+    </div>
+</div>
+
+{% endblock %}
