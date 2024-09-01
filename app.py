@@ -3,6 +3,8 @@ import urllib.request, json
 
 app = Flask(__name__)
 
+URLBASE = "https://rickandmortyapi.com/api"
+
 # Rota principal que exibe a lista de personagens
 @app.route("/")
 def get_list_characters_page():
@@ -21,6 +23,22 @@ def get_episode():
     data = json.loads(data_two)
     episodios = data.get('results', [])
     return render_template("episode.html", episodios=episodios)
+
+@app.route("/locations/")
+def get_locations():
+    url = f"{URLBASE}/location"
+    response = urllib.request.urlopen(url)
+    data = response.read()
+    dict = json.loads(data)
+    return render_template("locations.html",locations=dict["results"])
+
+@app.route("/locations/<id>")
+def get_locations_id(id):
+    url = f"{URLBASE}/location/{id}"
+    response = urllib.request.urlopen(url)
+    data = response.read()
+    dict = json.loads(data)
+    return render_template("location.html",location=dict)
 
 # Nova rota que exibe o perfil de um episódio específico
 @app.route("/episode/<id>")
