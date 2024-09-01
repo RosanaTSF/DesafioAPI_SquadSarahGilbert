@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "desafioapi-squadsarahgilbert"
+version = "0.1.0"
+description = ""
+authors = ["jclizar <jessica_lizar@yahoo.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+blinker= "1.8.2"
+click= "8.1.7"
+colorama= "0.4.6"
+Flask= "3.0.3"
+itsdangerous= "2.2.0"
+Jinja2= "3.1.4"
+MarkupSafe= "2.1.5"
+Werkzeug= "3.0.4"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
