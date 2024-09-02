@@ -1,0 +1,44 @@
+{% extends "layouts.html" %}
+
+{% block content %}
+    <div class="row d-flex align-items-start" style="padding: 30px; text-align: left;">
+        
+        <div class="col-md-4 col-sm-6 d-flex align-items-start" style="max-width: 100%; height: auto;">
+            <img src="{{profile.image}}" alt="{{profile.name}}" class="img-fluid img-thumbnail" style="max-width: 100%; height: auto;">
+        </div>
+        
+        <div class="col-sm-3 col-6">
+            <h1 class="h5" style="color: white;">{{profile.name}}</h3>
+            <h1 class="h5" style="color: white;">{{profile.species}}</h3>
+            <h1 class="h5" style="color: white;">{{profile.gender}}</h3>
+            <h3 style="color: white;">Origem</h3>
+            {% set url_parts = profile.origin.url.split('/') %}
+            {% set origin_id = url_parts|last %}
+            <p>
+                <a href="/profile/{{origin_id}}" class="btn btn-primary" style=" background-color:  #e23b9f; color: hsl(77, 93%, 50%);">
+                {{profile.origin.name}}
+                </a>
+            </p>
+            <h3 style="color: white;">Localização</h3>
+            {% set url_parts1 = profile.location.url.split('/') %}
+            {% set location_id = url_parts1|last %}
+            <p>
+                <a href="/location/{{location_id}}" class="btn btn-primary" style=" background-color:  #e23b9f; color: hsl(77, 93%, 50%);">
+                {{profile.location.name}}
+                </a>
+            </p>
+            <h3 style="color: white;">Episódios</h3>
+            {% for episode in profile.episode %}
+        
+            <div class="col-sm-3 col-6">
+                <p>
+                <a href="/episode/{{episode.partition('/episode/')[2]}}" class="btn btn-primary" style=" background-color: #e23b9f; color: hsl(77, 93%, 50%);">
+                    {{episode}}
+                </a>
+                </p>
+            </div>
+            {% endfor %}
+        </div>
+
+    </div>
+{% endblock %}

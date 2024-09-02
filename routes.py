@@ -24,6 +24,18 @@ def get_episode():
     episodios = data.get('results', [])
     return render_template("episode.html", episodios=episodios)
 
+@app.route("/profile/<id>") 
+def get_profile(id):
+    url = f"{URLBASE}/character/{id}"
+    try:
+        response = urllib.request.urlopen(url)
+        data_one = response.read()
+        data = json.loads(data_one)
+    except Exception as e:
+        return f"Erro ao buscar dados: {e}", 500
+    
+    return render_template("profile.html", profile=data)
+
 @app.route("/locations/")
 def get_locations():
     url = f"{URLBASE}/location"
