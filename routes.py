@@ -51,26 +51,12 @@ def episode_profile(id):
 
     # Lista de personagens que aparecem no episódio
     character_urls = episode["characters"]
-    characters = []
-
-    # Busca dados de cada personagem no episódio
-    for character_url in character_urls:
-        char_response = urllib.request.urlopen(character_url)
-        char_data = char_response.read()
-        character = json.loads(char_data)
-        characters.append(character)
 
     return render_template(
         "episode.html", 
         episode=episode, 
-        characters=characters
+        characters=character_urls
     )
-
-# sugestao para a rota de cima (Letícia):
-# tirar a parte do for de characters e colocar logo no return o characters_urls, funciona da mesma forma
-
-# e uma dúvida:
-# as rotas episodio e episode/id poder renderizar o mesmo template? achei que faria mais sentido com templates diferentes
 
 # Rota que retorna uma lista de personagens simplificada em JSON
 @app.route("/lista")
