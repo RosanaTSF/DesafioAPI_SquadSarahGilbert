@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 import urllib.request, json
 
 app = Flask(__name__)
@@ -8,11 +8,32 @@ URLBASE = "https://rickandmortyapi.com/api"
 # Rota principal que exibe a lista de personagens
 @app.route("/")
 def get_list_characters_page():
-    url = f"{URLBASE}/character/"
+    page = int(request.args.get('page', 1)) # /?page=1
+    url = f"{URLBASE}/character?page={page}"
     response = urllib.request.urlopen(url)
     data_one = response.read()
     data = json.loads(data_one)
-    return render_template("characters.html", characters=data["results"])
+
+    pagination = {}
+    pagination["page"] = page
+
+    pagination["first"] = f"/?page={1}"
+    if page == 1:
+        pagination["prev"] = f"/?page={1}"
+        pagination["prev_pag"] = 1
+    else:
+        pagination["prev"] = f"/?page={page-1}"
+        pagination["prev_pag"] = page-1
+
+    pagination["last"] = f"/?page={data['info']['pages']}"
+    if page == data['info']['pages']: #max == 42
+        pagination["next"] = f"/?page={data['info']['pages']}"
+        pagination["next_pag"] = data['info']['pages']
+    else:
+        pagination["next"] = f"/?page={page+1}"
+        pagination["next_pag"] = page+1
+
+    return render_template("characters.html", characters=data["results"], pagination=pagination)
 
 # Rota que exibe a lista de episódios
 @app.route("/episodio/")
