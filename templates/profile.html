@@ -1,40 +1,77 @@
 {% extends "layouts.html" %}
 
 {% block content %}
-    <div class="row d-flex align-items-start" style="padding: 30px; text-align: left;">
-        
-        <div class="col-md-4 col-sm-6 d-flex align-items-start" style="max-width: 100%; height: auto;">
+<div class="row d-flex align-items-start container" style="padding: 10px; text-align: left;">
+    <div class="col-6 col-md-3 d-flex align-items-center justify-content-center" style="max-width: 100%; height: auto; border-right: 1px solid #31d23f;">
             <img src="{{profile.image}}" alt="{{profile.name}}" class="img-fluid img-thumbnail" style="max-width: 100%; height: auto;">
         </div>
-        <div class="col-sm-3 col-6">
-            <h1 class="h5" style="color: white;">{{profile.name}}</h3>
-            <h1 class="h5" style="color: white;">{{profile.species}}</h3>
-            <h1 class="h5" style="color: white;">{{profile.gender}}</h3>
-            <h3 style="color: white;">Origem</h3>
-            {% set url_parts = profile.origin.url.split('/') %}
-            {% set origin_id = url_parts|last %}
-            <p>
-                <a href="/profile/{{origin_id}}" class="btn btn-primary" style=" background-color:  #e23b9f; color: hsl(77, 93%, 50%);">
+        <div class="col-6 col-md-9">
+            <h1 class="h5" style="font-size: 4rem; font-weight: 700; color: #31d23f; margin: 5% 0; font-family: 'Creepster', cursive; width: 100%;">
+                {{profile.name}}
+            </h1>
+            <h3 class="card-text h5" style="color: #34c7f3">
+                <span style="color: #ca45e9">Espécies:</span>
+                {{profile.species}}
+            </h3>
+            <h3 class="card-text h5" style="color: #34c7f3">
+                <span style="color: #ca45e9">Gênero:</span>
+                {{profile.gender}}
+            </h3>
+            <h3 class="card-text h5" style="color: #34c7f3">
+                <span style="color: #ca45e9">Origem:</span>
                 {{profile.origin.name}}
-                </a>
-            </p>
-            <h3 style="color: white;">Localização</h3>
-            <p>
-                <a href="/location/{{location_id}}" class="btn btn-primary" style=" background-color:  #e23b9f; color: hsl(77, 93%, 50%);">
+                {% set url_parts = profile.origin.url.split('/') %}
+                {% set origin_id = url_parts|last %}
+                <!-- <span>
+                    <a
+                      href="/profile/{{origin_id}}"
+                      class="btn btn-outline-success"
+                      style="
+                        border-radius: 16px 0 16px 0;
+                        border-color: #31d23f;
+                        margin-top: 1.5rem;
+                      "
+                      >Ver detalhes</a
+                    >
+                </span> -->
+            </h3>
+            <h3 class="card-text h5" style="color: #34c7f3">
+                <span style="color: #ca45e9">Localização:</span>
                 {{profile.location.name}}
-                </a>
-            </p>
-            <h3 style="color: white;">Episódios</h3>
+                <!-- <span>
+                    <a
+                      href="/location/{{location_id}}"
+                      class="btn btn-outline-success"
+                      style="
+                        border-radius: 16px 0 16px 0;
+                        border-color: #31d23f;
+                        margin-top: 1.5rem;
+                      "
+                      >Ver detalhes</a
+                    >
+                </span> -->
+            </h3>
+        </div>
+        <div>
+            <h4 class="card-text h4" style="color: #ca45e9; margin-top: 2rem;">Episódios onde atua <span style="color: #34c7f3">{{profile.name}}</span></h4>
+            <h3 class="card-text h5" style="color: white"> Cada episódio, uma nova dimensão.</h3>
             {% for episode in profile.episode %}
-            <div class="col-sm-3 col-6">
-                <p>
-                <a href="/episode/{{id}}" class="btn btn-primary" style=" background-color: #e23b9f; color: hsl(77, 93%, 50%);">
-                    {{episode}}
-                </a>
-                </p>
-            </div>
+                <div class="btn-group" role="group" aria-label="Basic outlined example" style="margin-bottom: 2rem;">
+                    <span>
+                        <a
+                          href="/episode/{{ episode.split('/')[-1] }}"
+                          title="Episódio {{ episode.split('/')[-1] }}"
+                          class="btn btn-outline-success"
+                          style="
+                            border-radius: 16px 0 16px 0;
+                            border-color: #31d23f;
+                            margin-top: 1rem;
+                          "
+                          >{{ episode.split('/')[-1] }}</a
+                        >
+                    </span>
+                </div>
             {% endfor %}
         </div>
-
     </div>
 {% endblock %}
