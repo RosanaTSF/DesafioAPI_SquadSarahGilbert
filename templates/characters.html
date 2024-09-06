@@ -1,3 +1,12 @@
+<head>
+  <style>
+    .btn-outline-success:hover img {
+      opacity: 0.9;
+      transform: rotate(-5deg);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+  </style>
+</head>
 {% extends "layouts.html" %} {% block content %}
 <div class="container">
   <div class="row" style="padding: 30px">
@@ -7,13 +16,21 @@
         font-size: 5rem;
         font-weight: 900;
         color: #31d23f;
-        margin-top: 5%;
-        margin-bottom: 5%;
+        margin: 1rem 0 1.5rem 0;
         font-family: 'Creepster', cursive;
       "
     >
       The Rick and Morty
     </h1>
+    <h5 class="h5 card-text h5" style="color: white">
+      "Bem-vindo ao portal para o multiverso mais louco da animação!
+    </h5>
+    <h5 class="h5 card-text h5" style="color: white;margin: 1rem 0;">
+      Aqui você encontrará tudo sobre <span style="color: #34c7f3">Rick and Morty</span>, a série que conquistou o mundo com suas aventuras espaciais.
+    </h5>
+    <h5 class="h5 card-text h5" style="color: white;margin-bottom: 1.5rem;">
+      Clique nas imagens para saber mais sobre cada um deles e embarque em uma jornada intergaláctica inesquecível."
+    </h5>
     {% for character in characters %}
     <div class="col-sm-3 col-6">
       <div
@@ -22,14 +39,24 @@
           border-color: #31d23f;
           border-radius: 16px 0 16px 0;
           background-color: transparent;
-          padding: 1.5rem;
+          padding: 0.5rem;
         "
       >
+      <a
+        href="/profile/{{character.id}}"
+        class="btn btn-outline-success .btn-outline-success"
+        style="
+          margin-top: 0.5rem;
+          border: none;
+        "
+        >
         <img
           src="{{ character.image }}"
           alt="{{ character.name }}"
           class="card-img-top img-fluid img-thumbnail"
         />
+      </a>  
+      
         <div class="card-body">
           <h5 class="card-title" style="color: white">{{ character.name }}</h5>
           <p>
