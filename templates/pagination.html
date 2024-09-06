@@ -7,8 +7,9 @@
         <li class="page-item"><a class="btn btn-outline-success" href="{{pagination.prev}}" style="border-radius: 0px;border-color: #31d23f">{{pagination.prev_pag}}</a></li>
       {% endif %}
       <li class="page-item page-item active"><a class="page-link" href="{{pagination.page}}" style="background-color: #CA45E9;border-color: #CA45E9;;">{{pagination.page}}</a></li>  
+      {% if pagination.next_pag != pagination.last_num %}
       <li class="page-item"><a class="btn btn-outline-success" href="{{pagination.next}}" style="border-radius: 0px;border-color: #31d23f">{{pagination.next_pag}}</a></li>
-     
+      {% endif %}
       <li class="page-item">
         <a class="btn btn-outline-success" href="{{pagination.last}}" style="border-radius: 0px 0px 16px 0px; border-color: #31d23f;">Último</a>
       </li>
