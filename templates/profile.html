@@ -55,22 +55,23 @@
         <div>
             <h4 class="card-text h4" style="color: #ca45e9; margin-top: 2rem;">Episódios onde atua <span style="color: #34c7f3">{{profile.name}}</span></h4>
             <h3 class="card-text h5" style="color: white"> Cada episódio, uma nova dimensão.</h3>
-            {% for episodio in profile.episode %}
-        <div class="btn-group" role="group" aria-label="Basic outlined example" style="margin-bottom: 2rem;">
-            <span>
-                <a
-                    href="{{ episodio}}"
-                    class="btn btn-outline-success"
-                    style="
-                        border-radius: 16px 0 16px 0;
-                        border-color: #31d23f;
-                        margin-top: 1rem;
-                    "
-                >  Ver Episódio {{ episodio.split('/')[-1] }}
-                </a>
-        </span>
-    </div>
-{% endfor %}
+            {% for episode in profile.episode %}
+                <div class="btn-group" role="group" aria-label="Basic outlined example" style="margin-bottom: 2rem;">
+                    <span>
+                        <a
+                          href="/episode/{{ episode.split('/')[-1] }}"
+                          title="Episódio {{ episode.split('/')[-1] }}"
+                          class="btn btn-outline-success"
+                          style="
+                            border-radius: 16px 0 16px 0;
+                            border-color: #31d23f;
+                            margin-top: 1rem;
+                          "
+                          >{{ episode.split('/')[-1] }}</a
+                        >
+                    </span>
+                </div>
+            {% endfor %}
         </div>
     </div>
 {% endblock %}
