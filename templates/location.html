@@ -4,19 +4,38 @@
 <div class="row">
 
 <div>
-    <h3 class="h5">{{location.name}}</h3>
-    <h3 class="h6">{{location.type}}</h3>
-    <h3 class="h6">{{location.dimension}}</h3>
-    <h3 class="h6">Residents</h3>
-    <div class="row">
-        {% for url in location.residents %}
-        <div class="col-sm-3 col-6">
-            <p>
-                <spam>Personagem {{loop.index}}</spam>
-                <a href="{{url}}" class="btn btn-primary"> Ver perfil</a>
-            </p>
-        </div>
-    {% endfor %}
+    <h1 class="h5" style="font-size: 4rem; font-weight: 700; color: #31d23f; margin: 5% 0; font-family: 'Creepster', cursive; width: 100%;">
+        {{location.name}}
+    </h1>
+    <h3 class="card-text h5" style="color: #34c7f3">
+        <span style="color: #ca45e9">Tipo:</span>
+        {{location.type}}
+    </h3>
+    <h3 class="card-text h5" style="color: #34c7f3">
+        <span style="color: #ca45e9">Dimensão:</span>
+        {{location.dimension}}
+    </h3>
+    <div>
+        <h4 class="card-text h4" style="color: #ca45e9; margin-top: 2rem;">Um Cosmo de Criaturas em <span style="color: #34c7f3">{{location.name}}</span></h4>
+        <h3 class="card-text h5" style="color: white"> Descubra os habitantes únicos e exóticos deste planeta. </h3>
+        <h3 class="card-text h5" style="color: white"> Clique nós números para saber mais sobre ele. </h3>
+        {% for resident in location.residents %}
+            <div class="btn-group" role="group" aria-label="Basic outlined example" style="margin-bottom: 2rem;">
+                <span>
+                    <a
+                      href="/profile/{{ resident.split('/')[-1]}}"
+                      title="Personagem {{ resident.split('/')[-1] }}"
+                      class="btn btn-outline-success"
+                      style="
+                        border-radius: 16px 0 16px 0;
+                        border-color: #31d23f;
+                        margin-top: 1rem;
+                      "
+                      >{{resident.split('/')[-1] }}</a
+                    >
+                </span>
+            </div>
+        {% endfor %}
     </div>
 </div>
 
