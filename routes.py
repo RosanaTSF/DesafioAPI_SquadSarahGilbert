@@ -41,18 +41,27 @@ def get_list_characters_page():
     return render_template("characters.html", characters=data["results"], pagination=pagination)
 
 # Rota que exibe a lista de episódios
-@app.route("/episodio/")
+@app.route("/episodes/")
 def get_episode():
     page = int(request.args.get('page', 1)) # /?page=1
     url = f"{URLBASE}/episode?page={page}"
     response = urllib.request.urlopen(url)
     data_two = response.read()
     data = json.loads(data_two)
-    episodios = data.get('results', [])
 
-    pagination = pagination_att(page, data, '/episodio')
+    pagination = pagination_att(page, data, '/episodes')
 
-    return render_template("episode.html", episodios=episodios ,pagination=pagination)
+    return render_template("episodes.html", episodes=data["results"] ,pagination=pagination)
+
+# Rota que exibe a lista de episódios
+@app.route("/episodes/<id>")
+def get_episode_id(id):
+    url = f"{URLBASE}/episode/{id}"
+    response = urllib.request.urlopen(url)
+    data_two = response.read()
+    data = json.loads(data_two)
+
+    return render_template("episode.html", episode=data)
 
 @app.route("/profile/<id>") 
 def get_profile(id):
@@ -86,38 +95,12 @@ def get_locations_id(id):
     dict = json.loads(data)
     return render_template("location.html",location=dict)
 
-'''# Nova rota que exibe o perfil de um episódio específico
-@app.route("/episode/<id>")
-def episode_profile(id):
-    # Faz a requisição para o episódio específico usando o ID
-    url = f"{URLBASE}/episode/{id}"
-    response = urllib.request.urlopen(url)
-    episode_data = response.read()
-    episode = json.loads(episode_data)
-
-    # Lista de personagens que aparecem no episódio
-    character_urls = episode["characters"]
-
-    return render_template(
-        "episode.html", 
-        episode=episode, 
-        characters=character_urls
-    )'''
-
 # Rota que retorna uma lista de personagens simplificada em JSON
 @app.route("/lista")
 def get_list_elements():
-    url = f"{URLBASE}/character/"
+    url = f"{URLBASE}"
     response = urllib.request.urlopen(url)
     characters_data = response.read()
     data = json.loads(characters_data)
-    
-    characters = []
-    for character in data["results"]:
-        character_info = {
-            "name": character["name"],
-            "status": character["status"]
-        }
-        characters.append(character_info)
 
-    return {"characters": characters}
+    return data

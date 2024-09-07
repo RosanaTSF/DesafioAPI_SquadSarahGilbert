@@ -1,21 +1,42 @@
 {% extends "layouts.html" %}
 
 {% block content %}
-    <div class="container">
-        <h2 style="margin-top: 5%; margin-bottom: 5%; color: white;">Todos os Episódios</h2>
-        <div class="row">
-            {% for episodio in episodios %}
-            <div class="col-sm-3 col-6">
-                <div class="card" style="border: 2px solid hwb(0 4% 96%); background-color: rgb(225, 231, 224); padding: 20px; margin-bottom: 20px;">
-                    <h2 class="h6">{{ episodio.name }}</h2>
-                    <p><strong>Data:</strong> {{ episodio.air_date }}</p>
-                    <p><strong>Link do Episódio:</strong></p>
-                    <a href="{{ episodio.url }}" class="btn btn-primary" style="border: 2px solid hwb(0 4% 96%); background-color: hwb(309 2% 1%); color: black; margin-top: 10px;"> {{ episodio.episode }}</a>
-                </div>
-            </div>
-            {% endfor %}
-        </div>
-    </div>
-{% include "pagination.html"%}
-{% endblock %}
+<div class="row">
 
+<div>
+    <h1 class="h5" style="font-size: 4rem; font-weight: 700; color: #31d23f; margin: 5% 0; font-family: 'Creepster', cursive; width: 100%;">
+        {{episode.name}}
+    </h1>
+    <h3 class="card-text h5" style="color: #34c7f3">
+        <span style="color: #ca45e9">Data:</span>
+        {{episode.air_date}}
+    </h3>
+    <h3 class="card-text h5" style="color: #34c7f3">
+        <span style="color: #ca45e9">Episódio:</span>
+        {{episode.episode}}
+    </h3>
+    <div>
+        <h4 class="card-text h4" style="color: #ca45e9; margin-top: 2rem;">Um Cosmo de Criaturas em <span style="color: #34c7f3">{{episode.name}}</span></h4>
+        <h3 class="card-text h5" style="color: white"> Descubra os personagens únicos que aparecem nesse episódio. </h3>
+        <h3 class="card-text h5" style="color: white"> Clique nós números para saber mais sobre eles. </h3>
+        {% for characters in episode.characters %}
+            <div class="btn-group" role="group" aria-label="Basic outlined example" style="margin-bottom: 2rem;">
+                <span>
+                    <a
+                      href="/profile/{{ characters.split('/')[-1]}}"
+                      title="Personagem {{ characters.split('/')[-1] }}"
+                      class="btn btn-outline-success"
+                      style="
+                        border-radius: 16px 0 16px 0;
+                        border-color: #31d23f;
+                        margin-top: 1rem;
+                      "
+                      >{{characters.split('/')[-1] }}</a
+                    >
+                </span>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}
