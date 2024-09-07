@@ -104,3 +104,8 @@ def get_list_elements():
     data = json.loads(characters_data)
 
     return data
+
+@app.route("/documentation")
+def documentation():
+
+    return {}
