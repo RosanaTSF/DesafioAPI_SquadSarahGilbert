@@ -30,6 +30,7 @@ Com a versão 3.11 para cima do python, execute os seguintes comandos:
 
 _Esses comandos permitem que você mantenha sua branch local atualizada com as últimas mudanças do repositório remoto (upstream)._
 
-##Deploy
-### O deploy foi feito no render com uma conta individual
+## Deploy
+O deploy foi feito no render com uma conta individual.
+<br>
 https://desafioapi-squadsarahgilbert.onrender.com/

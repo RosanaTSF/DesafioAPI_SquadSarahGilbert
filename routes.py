@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, url_for
 from flask_sitemapper import Sitemapper
 import urllib.request, json
 import os
@@ -145,7 +145,10 @@ def get_list_elements():
 @app.route("/documentation")
 def documentation():
     url = f"{URLBASE}/documentation"
-    url_base = "http://127.0.0.1:5000"
+    #url_base = "http://127.0.0.1:5000"
+    scheme = request.scheme  # 'http' ou 'https'
+    host = request.host      # '127.0.0.1:5000' ou 'localhost:5000'
+    url_base = f'{scheme}://{host}'
 
     dict_total= {}
 
