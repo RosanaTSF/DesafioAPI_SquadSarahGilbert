@@ -1,10 +1,18 @@
+<head>
+    <style>
+      @media (min-width: 768px) {
+        .h1.text-start{
+          font-size: 4rem;
+        }
+      }
+    </style>
+</head> 
 {% extends "layouts.html" %}
-
 {% block content %}
 <div class="row">
 
 <div>
-    <h1 class="h5" style="font-size: 4rem; font-weight: 700; color: #31d23f; margin: 5% 0; font-family: 'Creepster', 'Roboto', sans-serif, system-ui; width: 100%;">
+    <h1 class="h1 text-start" style=" color: #31d23f; margin: 5% 0; font-family: 'Creepster', 'Roboto', sans-serif, system-ui; width: 100%;">
         {{episode.name}}
     </h1>
     <h3 class="card-text h5" style="color: #34c7f3">

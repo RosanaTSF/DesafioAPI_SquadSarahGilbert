@@ -1,10 +1,18 @@
-{% extends "layouts.html" %} {% block content %}
+<head>
+  <style>
+    @media (min-width: 768px) {
+      .h1.text-start{
+        font-size: 4rem;
+      }
+    }
+  </style>
+</head>
+{% extends "layouts.html" %}
+{% block content %}
 <div class="row">
   <h1
-      class="h1 text-center"
+      class="h1 text-start"
       style="
-        font-size: 5rem;
-        font-weight: 900;
         color: #31d23f;
         margin-top: 5%;
         margin-bottom: 5%;
