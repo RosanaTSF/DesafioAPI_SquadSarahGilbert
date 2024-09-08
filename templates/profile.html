@@ -1,12 +1,25 @@
+<head>
+    <style>
+      .btn-outline-success:hover img {
+        opacity: 0.9;
+        transform: rotate(-5deg);
+        transition: opacity 0.3s ease, transform 0.3s ease;
+      }
+      @media (min-width: 768px) {
+        .h1.text-start{
+          font-size: 4rem;
+        }
+      }
+    </style>
+  </head>  
 {% extends "layouts.html" %}
-
 {% block content %}
 <div class="row d-flex align-items-start container" style="padding: 10px; text-align: left;">
     <div class="col-6 col-md-3 d-flex align-items-center justify-content-center" style="max-width: 100%; height: auto; border-right: 1px solid #31d23f;">
             <img src="{{profile.image}}" alt="{{profile.name}}" class="img-fluid img-thumbnail" style="max-width: 100%; height: auto;">
         </div>
         <div class="col-6 col-md-9">
-            <h1 class="h5" style="font-size: 4rem; font-weight: 700; color: #31d23f; margin: 5% 0; font-family: 'Creepster', 'Roboto', sans-serif, system-ui; width: 100%;">
+            <h1 class="h1 text-start" style="color: #31d23f; margin: 5% 0; font-family: 'Creepster', 'Roboto', sans-serif, system-ui; width: 100%;">
                 {{profile.name}}
             </h1>
             <h3 class="card-text h5" style="color: #34c7f3">
