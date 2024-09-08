@@ -1,14 +1,19 @@
 from flask import Flask, render_template, request
+from flask_sitemapper import Sitemapper
 import urllib.request, json
+import os
 
+routes = [] 
+sitemapper = Sitemapper()
 app = Flask(__name__)
+sitemapper.init_app(app)
 
 URLBASE = "https://rickandmortyapi.com/api"
 
+#Paginação
 def pagination_att(page,data,endpoint):
     pagination = {}
     pagination["page"] = page
-
     pagination["first"] = f"{endpoint}?page={1}"
     if page == 1:
         pagination["prev"] = f"{endpoint}?page={1}"
@@ -16,7 +21,6 @@ def pagination_att(page,data,endpoint):
     else:
         pagination["prev"] = f"{endpoint}?page={page-1}"
         pagination["prev_pag"] = page-1
-
     pagination["last"] = f"{endpoint}?page={data['info']['pages']}"
     pagination["last_num"] = data['info']['pages']
     if page == data['info']['pages']: #max == 42
@@ -25,9 +29,10 @@ def pagination_att(page,data,endpoint):
     else:
         pagination["next"] = f"{endpoint}?page={page+1}"
         pagination["next_pag"] = page+1
-
     return pagination
-# Rota principal que exibe a lista de personagens
+
+#Rota principal que exibe a lista de personagens
+@sitemapper.include(lastmod="2024-09-07")
 @app.route("/")
 def get_list_characters_page():
     page = int(request.args.get('page', 1)) # /?page=1
@@ -35,34 +40,11 @@ def get_list_characters_page():
     response = urllib.request.urlopen(url)
     data_one = response.read()
     data = json.loads(data_one)
-
     pagination = pagination_att(page, data, '/')
-    
     return render_template("characters.html", characters=data["results"], pagination=pagination)
 
-# Rota que exibe a lista de episódios
-@app.route("/episodes/")
-def get_episode():
-    page = int(request.args.get('page', 1)) # /?page=1
-    url = f"{URLBASE}/episode?page={page}"
-    response = urllib.request.urlopen(url)
-    data_two = response.read()
-    data = json.loads(data_two)
-
-    pagination = pagination_att(page, data, '/episodes')
-
-    return render_template("episodes.html", episodes=data["results"] ,pagination=pagination)
-
-# Rota que exibe a lista de episódios
-@app.route("/episodes/<id>")
-def get_episode_id(id):
-    url = f"{URLBASE}/episode/{id}"
-    response = urllib.request.urlopen(url)
-    data_two = response.read()
-    data = json.loads(data_two)
-
-    return render_template("episode.html", episode=data)
-
+#Rota do personagem 
+@sitemapper.include(lastmod="2024-09-07")
 @app.route("/profile/<id>") 
 def get_profile(id):
     url = f"{URLBASE}/character/{id}"
@@ -72,9 +54,32 @@ def get_profile(id):
         data = json.loads(data_one)
     except Exception as e:
         return f"Erro ao buscar dados: {e}", 500
-    
     return render_template("profile.html", profile=data)
 
+#Rota que exibe a lista de episódios
+@sitemapper.include(lastmod="2024-09-07")
+@app.route("/episodes/")
+def get_episode():
+    page = int(request.args.get('page', 1)) # /?page=1
+    url = f"{URLBASE}/episode?page={page}"
+    response = urllib.request.urlopen(url)
+    data_two = response.read()
+    data = json.loads(data_two)
+    pagination = pagination_att(page, data, '/episodes')
+    return render_template("episodes.html", episodes=data["results"] ,pagination=pagination)
+
+#Rota do episódio
+@sitemapper.include(lastmod="2024-09-07")
+@app.route("/episodes/<id>")
+def get_episode_id(id):
+    url = f"{URLBASE}/episode/{id}"
+    response = urllib.request.urlopen(url)
+    data_two = response.read()
+    data = json.loads(data_two)
+    return render_template("episode.html", episode=data)
+
+#Rota que exibe a lista dos planetas vs localização
+@sitemapper.include(lastmod="2024-09-07")
 @app.route("/locations/")
 def get_locations():
     page = int(request.args.get('page', 1)) # /?page=1
@@ -83,10 +88,11 @@ def get_locations():
     response = urllib.request.urlopen(url)
     data = response.read()
     dict = json.loads(data)
-
     pagination = pagination_att(page, dict, '/locations')
     return render_template("locations.html",locations=dict["results"], pagination=pagination)
 
+#Rota do planeta 
+@sitemapper.include(lastmod="2024-09-07")
 @app.route("/locations/<id>")
 def get_locations_id(id):
     url = f"{URLBASE}/location/{id}"
@@ -102,10 +108,43 @@ def get_list_elements():
     response = urllib.request.urlopen(url)
     characters_data = response.read()
     data = json.loads(characters_data)
-
     return data
 
+#Rota da documentação
 @app.route("/documentation")
 def documentation():
-
-    return {}
+    url = f"{URLBASE}/documentation"
+    url_base = "http://127.0.0.1:5000"
+    routes = [
+        {
+            "method": "GET",
+            "url": f"{url_base}/",
+            "description": "Mergulhe no multiverso de Rick e Morty! Descubra personagens, episódios e planetas."
+        },
+        {
+            "method": "GET",
+            "url": f"{url_base}/profile/1",
+            "description": "Descubra tudo sobre um personagem. São 826 personagens para você explorar!"
+        },
+        {
+            "method": "GET",
+            "url": f"{url_base}/episodes/",
+            "description": "Explore a lista completa de episódios e descubra os mais emocionantes."
+        },
+        {
+            "method": "GET",
+            "url": f"{url_base}/episodes/1",
+            "description": "Descubra tudo sobre um episódio específico. São 51 personagens para você explorar!"
+        },
+        {
+            "method": "GET",
+            "url": f"{url_base}/locations/",
+            "description": "Explore a lista completa dos planetas mais bizarros do multiverso!"
+        },
+        {
+            "method": "GET",
+            "url": f"{url_base}/locations/1",
+            "description": "Descubra tudo sobre um planeta específico. São 126 planetas para você explorar!"
+        }
+    ]
+    return render_template("documentation.html", routes=routes)

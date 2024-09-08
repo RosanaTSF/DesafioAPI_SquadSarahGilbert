@@ -59,6 +59,41 @@ async = ["asgiref (>=3.2)"]
 dotenv = ["python-dotenv"]
 
 [[package]]
+name = "flask-sitemap"
+version = "0.4.0"
+description = "Flask extension that helps with sitemap generation."
+optional = false
+python-versions = "*"
+files = [
+    {file = "Flask-Sitemap-0.4.0.tar.gz", hash = "sha256:a59f726e889a1c7a71c6d0980fb62c2a9f382c73391567e00f8af892bb4ec731"},
+    {file = "Flask_Sitemap-0.4.0-py2.py3-none-any.whl", hash = "sha256:bafdcca1fc321aafb8c086a8bd260591df29c521032001533327825acff976b8"},
+]
+
+[package.dependencies]
+blinker = ">=1.3"
+Flask = ">=1.1"
+
+[package.extras]
+all = ["Sphinx (==4.2.0)", "check-manifest (>=0.42)", "coverage (>=5.3,<6)", "pytest (>=6,<7)", "pytest-cov (>=2.10.1)", "pytest-flask (>=1.0.0)", "pytest-isort (>=1.2.0)", "pytest-pycodestyle (>=2.2.0)", "pytest-pydocstyle (>=2.2.0)"]
+docs = ["Sphinx (==4.2.0)"]
+tests = ["check-manifest (>=0.42)", "coverage (>=5.3,<6)", "pytest (>=6,<7)", "pytest-cov (>=2.10.1)", "pytest-flask (>=1.0.0)", "pytest-isort (>=1.2.0)", "pytest-pycodestyle (>=2.2.0)", "pytest-pydocstyle (>=2.2.0)"]
+
+[[package]]
+name = "flask-sitemapper"
+version = "1.8.0"
+description = "Flask extension for generating XML sitemaps"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "flask_sitemapper-1.8.0-py3-none-any.whl", hash = "sha256:921eeecd6855b99990d4663ff4e9e31fe9dac0551a465f8b0811444ada18d6da"},
+    {file = "flask_sitemapper-1.8.0.tar.gz", hash = "sha256:e065f58db2ca089226fb8a1065863eef3cda9a0f24683904e5979caccacd8d5f"},
+]
+
+[package.dependencies]
+flask = ">=2.2.2"
+jinja2 = ">=3.1.3"
+
+[[package]]
 name = "itsdangerous"
 version = "2.2.0"
 description = "Safely pass data to untrusted environments and back."
@@ -156,6 +191,20 @@ files = [
 ]
 
 [[package]]
+name = "python-dotenv"
+version = "1.0.1"
+description = "Read key-value pairs from a .env file and set them as environment variables"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "python-dotenv-1.0.1.tar.gz", hash = "sha256:e324ee90a023d808f1959c46bcbc04446a10ced277783dc6ee09987c37ec10ca"},
+    {file = "python_dotenv-1.0.1-py3-none-any.whl", hash = "sha256:f7b63ef50f1b690dddf550d03497b66d609393b40b564ed0d674909a68ebf16a"},
+]
+
+[package.extras]
+cli = ["click (>=5.0)"]
+
+[[package]]
 name = "werkzeug"
 version = "3.0.4"
 description = "The comprehensive WSGI web application library."
@@ -175,4 +224,4 @@ watchdog = ["watchdog (>=2.3)"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "a24549d3030a02d0f007aa292e2324849ce33145130652ecda3dde8b18977c40"
+content-hash = "c76d9663816690a6366da163da370110cd188664c78e3a0ddad67d8bc1e866e8"
