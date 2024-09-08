@@ -5,31 +5,39 @@
       transform: rotate(-5deg);
       transition: opacity 0.3s ease, transform 0.3s ease;
     }
+    @media (min-width: 768px) {
+      h1.display-3{
+        font-size: 12px;
+      }
+    }
   </style>
 </head>
 {% extends "layouts.html" %} {% block content %}
 <div class="container">
   <div class="row" style="padding: 30px">
     <h1
-      class="h1 text-center"
       style="
-        font-size: 5rem;
+        font-size: 4rem;
         font-weight: 900;
         color: #31d23f;
         margin: 1rem 0 1.5rem 0;
-        font-family: 'Creepster', cursive;
+        font-family: 'Creepster', 'Roboto', sans-serif, system-ui;
+        text-align: center;
+        @media (max-width: 768px) {
+          font-size: 12px;
+        }
       "
     >
       The Rick and Morty
     </h1>
     <h5 class="h5 card-text h5" style="color: white">
-      "Bem-vindo ao portal para o multiverso mais louco da animação!
+      Bem-vindo ao portal para o multiverso mais louco da animação!
     </h5>
     <h5 class="h5 card-text h5" style="color: white;margin: 1rem 0;">
       Aqui você encontrará tudo sobre <span style="color: #34c7f3">Rick and Morty</span>, a série que conquistou o mundo com suas aventuras espaciais.
     </h5>
     <h5 class="h5 card-text h5" style="color: white;margin-bottom: 1.5rem;">
-      Clique nas imagens para saber mais sobre cada um deles e embarque em uma jornada intergaláctica inesquecível."
+      Clique nas imagens para saber mais sobre cada um deles e embarque em uma jornada intergaláctica inesquecível.
     </h5>
     {% for character in characters %}
     <div class="col-sm-3 col-6">
