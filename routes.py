@@ -37,10 +37,15 @@ def pagination_att(page,data,endpoint):
 def get_list_characters_page():
     page = int(request.args.get('page', 1)) # /?page=1
     url = f"{URLBASE}/character?page={page}"
-    response = urllib.request.urlopen(url)
-    data_one = response.read()
-    data = json.loads(data_one)
-    pagination = pagination_att(page, data, '/')
+    try:
+        response = urllib.request.urlopen(url)
+        data_one = response.read()
+        data = json.loads(data_one)
+        pagination = pagination_att(page, data, '/')
+
+    except Exception as e:
+        return f"Erro: {e}\nEXCEÇÃO: {type(e).__name__}", 500
+    
     return render_template("characters.html", characters=data["results"], pagination=pagination)
 
 #Rota do personagem 
@@ -52,20 +57,27 @@ def get_profile(id):
         response = urllib.request.urlopen(url)
         data_one = response.read()
         data = json.loads(data_one)
+
     except Exception as e:
-        return f"Erro ao buscar dados: {e}", 500
+        return f"Erro ao buscar dados: {e}\nEXCEÇÃO: {type(e).__name__}", 500
+    
     return render_template("profile.html", profile=data)
 
 #Rota que exibe a lista de episódios
 @sitemapper.include(lastmod="2024-09-07")
 @app.route("/episodes/")
 def get_episode():
-    page = int(request.args.get('page', 1)) # /?page=1
-    url = f"{URLBASE}/episode?page={page}"
-    response = urllib.request.urlopen(url)
-    data_two = response.read()
-    data = json.loads(data_two)
-    pagination = pagination_att(page, data, '/episodes')
+    try:
+        page = int(request.args.get('page', 1)) # /?page=1
+        url = f"{URLBASE}/episode?page={page}"
+        response = urllib.request.urlopen(url)
+        data_two = response.read()
+        data = json.loads(data_two)
+        pagination = pagination_att(page, data, '/episodes')
+    
+    except Exception as e:
+        return f"Erro: {e}\nEXCEÇÃO: {type(e).__name__}", 500
+    
     return render_template("episodes.html", episodes=data["results"] ,pagination=pagination)
 
 #Rota do episódio
@@ -73,9 +85,14 @@ def get_episode():
 @app.route("/episodes/<id>")
 def get_episode_id(id):
     url = f"{URLBASE}/episode/{id}"
-    response = urllib.request.urlopen(url)
-    data_two = response.read()
-    data = json.loads(data_two)
+    try:
+        response = urllib.request.urlopen(url)
+        data_two = response.read()
+        data = json.loads(data_two)
+
+    except Exception as e:
+        return f"Erro: {e}\nEXCEÇÃO: {type(e).__name__}", 500
+    
     return render_template("episode.html", episode=data)
 
 #Rota que exibe a lista dos planetas vs localização
@@ -84,11 +101,15 @@ def get_episode_id(id):
 def get_locations():
     page = int(request.args.get('page', 1)) # /?page=1
     url = f"{URLBASE}/location?page={page}"
-    #url = f"{URLBASE}/location"
-    response = urllib.request.urlopen(url)
-    data = response.read()
-    dict = json.loads(data)
-    pagination = pagination_att(page, dict, '/locations')
+    try:
+        response = urllib.request.urlopen(url)
+        data = response.read()
+        dict = json.loads(data)
+        pagination = pagination_att(page, dict, '/locations')
+    
+    except Exception as e:
+        return f"Erro: {e}\nEXCEÇÃO: {type(e).__name__}", 500
+
     return render_template("locations.html",locations=dict["results"], pagination=pagination)
 
 #Rota do planeta 
@@ -96,18 +117,28 @@ def get_locations():
 @app.route("/locations/<id>")
 def get_locations_id(id):
     url = f"{URLBASE}/location/{id}"
-    response = urllib.request.urlopen(url)
-    data = response.read()
-    dict = json.loads(data)
+    try:
+        response = urllib.request.urlopen(url)
+        data = response.read()
+        dict = json.loads(data)
+        
+    except Exception as e:
+        return f"Erro: {e}\nEXCEÇÃO: {type(e).__name__}", 500
+    
     return render_template("location.html",location=dict)
 
 # Rota que retorna uma lista de personagens simplificada em JSON
 @app.route("/lista")
 def get_list_elements():
     url = f"{URLBASE}"
-    response = urllib.request.urlopen(url)
-    characters_data = response.read()
-    data = json.loads(characters_data)
+    try:
+        response = urllib.request.urlopen(url)
+        characters_data = response.read()
+        data = json.loads(characters_data)
+
+    except Exception as e:
+        return f"Erro: {e}\nEXCEÇÃO: {type(e).__name__}", 500
+    
     return data
 
 #Rota da documentação
@@ -116,44 +147,50 @@ def documentation():
     url = f"{URLBASE}/documentation"
     url_base = "http://127.0.0.1:5000"
 
-    dict_total={}
-    for var in ['character','location','episode']:
-        url = f"{URLBASE}/{var}"
-        response = urllib.request.urlopen(url)
-        data_one = response.read()
-        data = json.loads(data_one)
-        dict_total[var] = data['info']['count']
+    dict_total= {}
 
-    routes = [
-        {
-            "method": "GET",
-            "url": f"{url_base}/",
-            "description": "Mergulhe no multiverso de Rick e Morty! Descubra personagens, episódios e planetas."
-        },
-        {
-            "method": "GET",
-            "url": f"{url_base}/profile/1",
-            "description": f"Descubra tudo sobre um personagem. São {dict_total['character']} personagens para você explorar!"
-        },
-        {
-            "method": "GET",
-            "url": f"{url_base}/episodes/",
-            "description": "Explore a lista completa de episódios e descubra os mais emocionantes."
-        },
-        {
-            "method": "GET",
-            "url": f"{url_base}/episodes/1",
-            "description": f"Descubra tudo sobre um episódio específico. São {dict_total['episode']} episódios para você explorar!"
-        },
-        {
-            "method": "GET",
-            "url": f"{url_base}/locations/",
-            "description": "Explore a lista completa dos planetas mais bizarros do multiverso!"
-        },
-        {
-            "method": "GET",
-            "url": f"{url_base}/locations/1",
-            "description": f"Descubra tudo sobre um planeta específico. São {dict_total['location']} planetas para você explorar!"
-        }
-    ]
+    try:
+        for var in ['character','location','episode']:
+            url = f"{URLBASE}/{var}"
+            response = urllib.request.urlopen(url)
+            data_one = response.read()
+            data = json.loads(data_one)
+            dict_total[var] = data['info']['count']
+
+        routes = [
+            {
+                "method": "GET",
+                "url": f"{url_base}/",
+                "description": "Mergulhe no multiverso de Rick e Morty! Descubra personagens, episódios e planetas."
+            },
+            {
+                "method": "GET",
+                "url": f"{url_base}/profile/1",
+                "description": f"Descubra tudo sobre um personagem. São {dict_total['character']} personagens para você explorar!"
+            },
+            {
+                "method": "GET",
+                "url": f"{url_base}/episodes/",
+                "description": "Explore a lista completa de episódios e descubra os mais emocionantes."
+            },
+            {
+                "method": "GET",
+                "url": f"{url_base}/episodes/1",
+                "description": f"Descubra tudo sobre um episódio específico. São {dict_total['episode']} episódios para você explorar!"
+            },
+            {
+                "method": "GET",
+                "url": f"{url_base}/locations/",
+                "description": "Explore a lista completa dos planetas mais bizarros do multiverso!"
+            },
+            {
+                "method": "GET",
+                "url": f"{url_base}/locations/1",
+                "description": f"Descubra tudo sobre um planeta específico. São {dict_total['location']} planetas para você explorar!"
+            }
+        ]
+            
+    except Exception as e:
+        return f"Erro: {e}\nEXCEÇÃO: {type(e).__name__}", 500
+        
     return render_template("documentation.html", routes=routes)
