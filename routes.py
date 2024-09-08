@@ -115,6 +115,15 @@ def get_list_elements():
 def documentation():
     url = f"{URLBASE}/documentation"
     url_base = "http://127.0.0.1:5000"
+
+    dict_total={}
+    for var in ['character','location','episode']:
+        url = f"{URLBASE}/{var}"
+        response = urllib.request.urlopen(url)
+        data_one = response.read()
+        data = json.loads(data_one)
+        dict_total[var] = data['info']['count']
+
     routes = [
         {
             "method": "GET",
@@ -124,7 +133,7 @@ def documentation():
         {
             "method": "GET",
             "url": f"{url_base}/profile/1",
-            "description": "Descubra tudo sobre um personagem. São 826 personagens para você explorar!"
+            "description": f"Descubra tudo sobre um personagem. São {dict_total['character']} personagens para você explorar!"
         },
         {
             "method": "GET",
@@ -134,7 +143,7 @@ def documentation():
         {
             "method": "GET",
             "url": f"{url_base}/episodes/1",
-            "description": "Descubra tudo sobre um episódio específico. São 51 personagens para você explorar!"
+            "description": f"Descubra tudo sobre um episódio específico. São {dict_total['episode']} episódios para você explorar!"
         },
         {
             "method": "GET",
@@ -144,7 +153,7 @@ def documentation():
         {
             "method": "GET",
             "url": f"{url_base}/locations/1",
-            "description": "Descubra tudo sobre um planeta específico. São 126 planetas para você explorar!"
+            "description": f"Descubra tudo sobre um planeta específico. São {dict_total['location']} planetas para você explorar!"
         }
     ]
     return render_template("documentation.html", routes=routes)
