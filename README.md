@@ -7,6 +7,9 @@
 ## 👩‍💻**Squad Sarah Gilbert**👩‍💻 | Desafio API Ricky & Morty
 
 
+
+
+
 ![image](https://github.com/user-attachments/assets/cab45892-562a-44e9-96ef-f1722a963f49)
 > Aplicação desenvolvida com a framework Flask.
 Todos os dados consumidos foram obtidos diretamente da API oficial Ricky e Morty: https://rickandmortyapi.com/
